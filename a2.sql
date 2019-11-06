@@ -9,6 +9,12 @@ SET search_path TO A2;
 
 --Query 1 statements
 INSERT INTO query1
+	(SELECT player.pname, country.cname, tournament.tname
+	FROM player, champion, tournament, country
+	WHERE player.pid = champion.pid AND 
+	player.cid = country.cid AND tournament.cid = player.cid
+	ORDER BY player.pname ASC
+	);
 
 --Query 2 statements
 INSERT INTO query2
