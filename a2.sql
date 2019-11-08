@@ -1,5 +1,5 @@
 SET search_path TO A2;
--- Add below your SQL statements. 
+-- Add below your SQL statements.
 -- For each of the queries below, your final statement should populate the respective answer table (queryX) with the correct tuples. It should look something like:
 -- INSERT INTO queryX (SELECT … <complete your SQL query here> …)
 -- where X is the correct index [1, …,10].
@@ -11,14 +11,18 @@ SET search_path TO A2;
 INSERT INTO query1
 	(SELECT player.pname, country.cname, tournament.tname
 	FROM player, champion, tournament, country
-	WHERE player.pid = champion.pid AND 
+	WHERE player.pid = champion.pid AND
 	player.cid = country.cid AND tournament.cid = player.cid
 	ORDER BY player.pname ASC
 	);
 
 --Query 2 statements
 INSERT INTO query2
-
+	(SELECT tournament.tname, MAX(SUM(court.capacity)) AS 'totalCapacity'
+	FROM tournament, court
+	WHERE court.tid = tournament.tid
+	GROUP BY tournament.tname
+	);
 --Query 3 statements
 INSERT INTO query3
 
@@ -42,4 +46,3 @@ INSERT INTO query9
 
 --Query 10 statements
 INSERT INTO query10
-
