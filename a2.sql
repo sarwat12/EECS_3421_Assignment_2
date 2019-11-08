@@ -18,7 +18,7 @@ INSERT INTO query1
 
 --Query 2 statements
 INSERT INTO query2
-	(SELECT tournament.tname, MAX(SUM(court.capacity)) AS 'totalCapacity'
+	(SELECT tournament.tname, MAX(SUM(court.capacity)) AS "totalCapacity"
 	FROM tournament, court
 	WHERE court.tid = tournament.tid
 	GROUP BY tournament.tname
