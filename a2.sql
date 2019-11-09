@@ -48,6 +48,12 @@ INSERT INTO query2
  );
   
 --Query 4 statements
+
+	(SELECT champion.pid AS "pid", player.pname AS "pname"
+	 FROM champion, player
+	 WHERE player.pid = champion.pid
+	);
+	
 --INSERT INTO query4
 
 --Query 5 statements
