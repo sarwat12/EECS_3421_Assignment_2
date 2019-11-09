@@ -11,7 +11,33 @@ CREATE VIEW sum_capacity(tid, tname, sum) AS
 	SELECT tournament.tid, tournament.tname, SUM(court.capacity)
 	FROM tournament JOIN court ON tournament.tid = court.tid
 	GROUP BY tournament.tid, tournament.tname;
- 
+
+
+
+CREATE VIEW win_2011(pid11,pname11,win11) AS
+	SELECT player.pid, player.pname, record.wins
+	FROM record, player
+	WHERE record.year = '2011'
+	AND record.pid = player.pid;
+
+CREATE VIEW win_2012(pid12,pname12,win12) AS
+	SELECT player.pid, player.pname, record.wins
+	FROM record, player
+	WHERE record.year = '2012'
+	AND record.pid = player.pid;
+
+CREATE VIEW win_2013(pid13,pname13,win13) AS
+	SELECT player.pid, player.pname, record.wins
+	FROM record, player
+	WHERE record.year = '2013'
+	AND record.pid = player.pid;
+
+CREATE VIEW win_2014(pid14,pname14,win14) AS
+	SELECT player.pid, player.pname, record.wins
+	FROM record, player
+	WHERE record.year = '2014'
+	AND record.pid = player.pid;
+
 --Query 1 statements
 INSERT INTO query1
 	(SELECT player.pname, country.cname, tournament.tname
@@ -62,7 +88,7 @@ DROP VIEW sum_capacity;
 		-- ORDER BY player.pname ASC
 	-- );
 
-=======
+
 	 -- FROM champion JOIN player ON champion.pid = player.pid
 	 -- JOIN tournament ON tournament.tid = champion.tid
 	 -- WHERE tournament.tid = ALL (SELECT champion.tid FROM champion)
@@ -80,13 +106,20 @@ INSERT INTO query5
 	);
 
 --Query 6 statements
---INSERT INTO query6
-	(SELECT record.year, record.wins, player.pname
-		FROM record, player
-		WHERE 
-		AND record.pid = player.pid
-	
+INSERT INTO query6
+	(SELECT win_2011.pid11 AS "pid", win_2011.pname11 AS "pname"
+		FROM win_2011, win_2012, win_2013, win_2014
+		WHERE win_2012.win12 > win_2011.win11
+		AND win_2013.win13 > win_2012.win12
+		AND win_2014.win14 > win_2013.win13
+		AND (win_2011.pid11 = win_2012.pid12 AND win_2012.pid12 = win_2013.pid13 AND win_2013.pid13 = win_2014.pid14 ) 
+		ORDER BY pname ASC
 	);
+DROP VIEW win_2011;
+DROP VIEW win_2012;
+DROP VIEW win_2013;
+DROP VIEW win_2014;
+
 --Query 7 statements
 --INSERT INTO query7
 
