@@ -82,7 +82,7 @@ CREATE TABLE court(
 CREATE TABLE champion(
     pid     INTEGER     REFERENCES player(pid) ON DELETE RESTRICT,
     year    INTEGER     NOT NULL, 
-    tid     INTEGER     REFERENCES tournament(tid) ON DELETE RESTRICT,
+    tid     INTEGER     NOT NULL, /*REFERENCES tournament(tid) ON DELETE RESTRICT,*/
     PRIMARY KEY(tid, year));
 
 -- The event table provides information about certain tennis games.
@@ -159,3 +159,67 @@ CREATE TABLE query9(
 CREATE TABLE query10(
     pname       VARCHAR
 );
+
+INSERT INTO country
+VALUES ('1', 'Bangladesh'),
+	('2', 'Canada'),
+	('3', 'India'),
+	('4', 'Pakistan'),
+	('5', 'USA'),
+	('6', 'Italy'),
+	('7', 'France');
+
+INSERT INTO player
+VALUES ('1', 'Sarwat', '1', '1'),
+	('2', 'Saiba', '2', '1'),
+	('3', 'Shahrukh', '5', '3'),
+	('4', 'Shruti', '67', '4'),
+	('5', 'Salman', '87', '7'),
+	('6', 'Shovon', '23', '6'),
+	('7', 'Nick', '11', '5');
+
+INSERT INTO champion
+VALUES ('1', '2015', '1'),
+	('4', '2011', '2'),
+	('5', '2012', '3'),
+	('6', '2009', '4'),
+	('2', '2010', '5'),
+	('3', '2013', '6'),
+	('7', '2008', '7');
+
+INSERT INTO tournament
+VALUES ('1', 'Bethune', '1'),
+	('2', 'Stong', '2'),
+	('3', 'Bergeron', '4'),
+	('4', 'Stacie', '5'),
+	('5', 'Lanes', '7'),
+	('6', 'William Small', '6'),
+	('7', 'Founders', '3');
+
+INSERT INTO court
+VALUES ('1', 'CourtA', '50', '1'),
+	('2', 'CourtB', '53', '3'),
+	('3', 'CourtC', '60', '5'),
+	('4', 'CourtD', '71', '7'),
+	('5', 'CourtE', '75', '6'),
+	('6', 'CourtF', '80', '2'),
+	('7', 'CourtG', '25', '4');
+
+INSERT INTO event
+VALUES ('1', '2019', '1', '1', '4', '50'),
+	('2', '2018', '3', '1', '3', '44'),
+	('3', '2017', '4', '2', '4', '21'),
+	('4', '2016', '7', '5', '7', '23'),
+	('5', '2015', '2', '2', '5', '19'),
+	('6', '2011', '5', '7', '1', '32'),
+	('7', '2012', '6', '6', '3', '45');
+
+
+INSERT INTO record
+VALUES ('1', '2019', '10', '2'),
+	('2', '2018', '5', '3'),
+	('3', '2017', '2', '10'),
+	('4', '2015', '11', '3'),
+	('5', '2011', '5', '12'),
+	('6', '2012', '20', '10'),
+	('7', '2008', '17', '21');
