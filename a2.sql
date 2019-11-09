@@ -18,14 +18,35 @@ INSERT INTO query1
 
 --Query 2 statements
 INSERT INTO query2
-	(SELECT tournament.tname, SUM(court.capacity) AS "totalCapacity"
+	/*(SELECT tournament.tname, SUM(court.capacity) AS "totalCapacity"
 	FROM tournament, court
 	WHERE court.tid = tournament.tid
 	GROUP BY tournament.tname
+	);*/
+	
+	(SELECT tournament.tname, court.capacity AS "totalCapacity"
+	FROM tournament, court 	
+	WHERE court.capacity >= ALL (SELECT SUM(court.capacity) AS "totalCapacity"
+									FROM tournament, court
+									WHERE court.tid = tournament.tid
+									GROUP BY tournament.tname)
+	AND court.tid = tournament.tid
 	);
+	
 --Query 3 statements
 --INSERT INTO query3
-
+	(SELECT event.winid AS "p1id", player.pname AS "p1name", event.lossid AS "p2id", player.pname AS "p2name" 
+	FROM event, player
+	WHERE event.winid = player.pid 
+	AND event.lossid = player.pid
+	AND player.globalrank = (SELECT max(player.globalrank)
+							FROM event, player
+							WHERE event.winid = player.pid 
+							AND event.lossid = player.pid
+						)
+	ORDER BY player.pname 
+ );
+  
 --Query 4 statements
 --INSERT INTO query4
 
