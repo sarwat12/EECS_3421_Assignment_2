@@ -106,6 +106,7 @@ INSERT INTO query5
 	);
 
 --Query 6 statements
+<<<<<<< HEAD
 INSERT INTO query6
 	(SELECT win_2011.pid11 AS "pid", win_2011.pname11 AS "pname"
 		FROM win_2011, win_2012, win_2013, win_2014
@@ -120,6 +121,11 @@ DROP VIEW win_2012;
 DROP VIEW win_2013;
 DROP VIEW win_2014;
 
+=======
+--INSERT INTO query6
+	
+	
+>>>>>>> 77e1caa1cf0fd4be91c5884048bd5d283f0965e2
 --Query 7 statements
 --INSERT INTO query7
 
