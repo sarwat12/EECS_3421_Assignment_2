@@ -8,7 +8,7 @@ SET search_path TO A2;
 -- Good Luck!
 
 --Query 1 statements
-INSERT INTO query1
+--INSERT INTO query1
 	(SELECT player.pname, country.cname, tournament.tname
 	FROM player, champion, tournament, country
 	WHERE player.pid = champion.pid AND
@@ -17,7 +17,7 @@ INSERT INTO query1
 	);
 
 --Query 2 statements
-INSERT INTO query2
+--INSERT INTO query2
 	/*(SELECT tournament.tname, SUM(court.capacity) AS "totalCapacity"
 	FROM tournament, court
 	WHERE court.tid = tournament.tid
@@ -29,7 +29,7 @@ INSERT INTO query2
 	WHERE court.capacity >= ALL (SELECT SUM(court.capacity) AS "totalCapacity"
 									FROM tournament, court
 									WHERE court.tid = tournament.tid
-									GROUP BY tournament.tname)
+									GROUP BY tournament.tid)
 	AND court.tid = tournament.tid
 	);
 	
@@ -48,13 +48,14 @@ INSERT INTO query2
  );
   
 --Query 4 statements
-
+--INSERT INTO query4
 	(SELECT champion.pid AS "pid", player.pname AS "pname"
-	 FROM champion, player
+	 FROM champion, player, tournament
 	 WHERE player.pid = champion.pid
+	 AND tournament.tid = champion.tid
+	 ORDER BY player.pname ASC
 	);
 	
---INSERT INTO query4
 
 --Query 5 statements
 --INSERT INTO query5
