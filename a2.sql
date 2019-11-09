@@ -12,7 +12,6 @@ CREATE VIEW player_champion AS
 	FROM player, champion
 	WHERE player.pid = champion.pid; 
 
-
 --Query 1 statements
 INSERT INTO query1
 	(SELECT player.pname, country.cname, tournament.tname
@@ -33,7 +32,7 @@ DROP VIEW player_champion;
 	GROUP BY tournament.tname
 	);*/
 	
-	-- (SELECT tournament.tname, court.capacity AS "totalCapacity"
+	-- (SELECT tournament.tname, court.capacity AS "0totalCapacity"
 	-- FROM tournament, court 	
 	-- WHERE court.capacity >= ALL (SELECT SUM(court.capacity) AS "totalCapacity"
 									-- FROM tournament, court
@@ -58,20 +57,30 @@ DROP VIEW player_champion;
   
 -- --Query 4 statements
 -- --INSERT INTO query4
-	(SELECT champion.pid, player.pname
-	 FROM champion, player
-	 WHERE player.pid = champion.pid
-	 AND champion.tid = ALL (SELECT tournament.tid FROM tournament)
-	 ORDER BY player.pname ASC
-	);
-	
+	-- (SELECT champion.pid, player.pname
+	 -- FROM champion, player
+	 -- WHERE player.pid = champion.pid
+	 -- AND champion.tid = ALL (SELECT tournament.tid FROM tournament)
+	 -- ORDER BY player.pname ASC
+	-- );
+	-- (SELECT champion.pid, player.pname
+		-- FROM champion
+		-- JOIN player ON champion.pid = player.pid
+		-- WHERE champion.tid = ALL (SELECT tournament.tid FROM tournament)
+		-- ORDER BY player.pname ASC
+	-- );
 
 --Query 5 statements
 --INSERT INTO query5
 
 --Query 6 statements
 --INSERT INTO query6
-
+	(SELECT record.year, record.wins, player.pname
+		FROM record, player
+		WHERE 
+		AND record.pid = player.pid
+	
+	);
 --Query 7 statements
 --INSERT INTO query7
 
