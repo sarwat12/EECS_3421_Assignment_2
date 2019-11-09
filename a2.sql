@@ -7,7 +7,10 @@ SET search_path TO A2;
 -- You can use the "\i a2.sql" command in psql to execute the SQL commands in this file.
 -- Good Luck!
 
-
+CREATE VIEW player_champion AS
+	SELECT player.pid, player.pname, champion.tid 
+	FROM player, champion
+	WHERE player.pid = champion.pid; 
 
 
 --Query 1 statements
@@ -20,6 +23,7 @@ INSERT INTO query1
 		WHERE player.cid = country.cid
 		ORDER BY player.pname ASC
 	);
+DROP VIEW player_champion;
 
 --Query 2 statements
 --INSERT INTO query2
@@ -54,12 +58,12 @@ INSERT INTO query1
   
 -- --Query 4 statements
 -- --INSERT INTO query4
-	-- (SELECT champion.pid AS "pid", player.pname AS "pname"
-	 -- FROM champion, player, tournament
-	 -- WHERE player.pid = champion.pid
-	 -- AND tournament.tid = champion.tid
-	 -- ORDER BY player.pname ASC
-	-- );
+	(SELECT champion.pid, player.pname
+	 FROM champion, player
+	 WHERE player.pid = champion.pid
+	 AND champion.tid = ALL (SELECT tournament.tid FROM tournament)
+	 ORDER BY player.pname ASC
+	);
 	
 
 --Query 5 statements
