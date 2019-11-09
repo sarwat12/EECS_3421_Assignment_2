@@ -7,13 +7,18 @@ SET search_path TO A2;
 -- You can use the "\i a2.sql" command in psql to execute the SQL commands in this file.
 -- Good Luck!
 
+
+
+
 --Query 1 statements
---INSERT INTO query1
+INSERT INTO query1
 	(SELECT player.pname, country.cname, tournament.tname
-	FROM player, champion, tournament, country
-	WHERE player.pid = champion.pid AND
-	player.cid = country.cid AND tournament.cid = player.cid
-	ORDER BY player.pname ASC
+		FROM country 
+		JOIN tournament ON country.cid = tournament.cid 
+		JOIN champion ON tournament.tid = champion.tid
+		JOIN player ON player.pid = champion.pid
+		WHERE player.cid = country.cid
+		ORDER BY player.pname ASC
 	);
 
 --Query 2 statements
@@ -24,37 +29,37 @@ SET search_path TO A2;
 	GROUP BY tournament.tname
 	);*/
 	
-	(SELECT tournament.tname, court.capacity AS "totalCapacity"
-	FROM tournament, court 	
-	WHERE court.capacity >= ALL (SELECT SUM(court.capacity) AS "totalCapacity"
-									FROM tournament, court
-									WHERE court.tid = tournament.tid
-									GROUP BY tournament.tid)
-	AND court.tid = tournament.tid
-	);
+	-- (SELECT tournament.tname, court.capacity AS "totalCapacity"
+	-- FROM tournament, court 	
+	-- WHERE court.capacity >= ALL (SELECT SUM(court.capacity) AS "totalCapacity"
+									-- FROM tournament, court
+									-- WHERE court.tid = tournament.tid
+									-- GROUP BY tournament.tid)
+	-- AND court.tid = tournament.tid
+	-- );
 	
 --Query 3 statements
 --INSERT INTO query3
-	(SELECT event.winid AS "p1id", player.pname AS "p1name", event.lossid AS "p2id", player.pname AS "p2name" 
-	FROM event, player
-	WHERE event.winid = player.pid 
-	AND event.lossid = player.pid
-	AND player.globalrank = (SELECT max(player.globalrank)
-							FROM event, player
-							WHERE event.winid = player.pid 
-							AND event.lossid = player.pid
-						)
-	ORDER BY player.pname 
- );
+	-- (SELECT event.winid AS "p1id", player.pname AS "p1name", event.lossid AS "p2id", player.pname AS "p2name" 
+	-- FROM event, player
+	-- WHERE event.winid = player.pid 
+	-- AND event.lossid = player.pid
+	-- AND player.globalrank = (SELECT max(player.globalrank)
+							-- FROM event, player
+							-- WHERE event.winid = player.pid 
+							-- AND event.lossid = player.pid
+						-- )
+	-- ORDER BY player.pname 
+ --);
   
---Query 4 statements
---INSERT INTO query4
-	(SELECT champion.pid AS "pid", player.pname AS "pname"
-	 FROM champion, player, tournament
-	 WHERE player.pid = champion.pid
-	 AND tournament.tid = champion.tid
-	 ORDER BY player.pname ASC
-	);
+-- --Query 4 statements
+-- --INSERT INTO query4
+	-- (SELECT champion.pid AS "pid", player.pname AS "pname"
+	 -- FROM champion, player, tournament
+	 -- WHERE player.pid = champion.pid
+	 -- AND tournament.tid = champion.tid
+	 -- ORDER BY player.pname ASC
+	-- );
 	
 
 --Query 5 statements
