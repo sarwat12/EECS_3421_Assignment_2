@@ -6,7 +6,11 @@ SET search_path TO A2;
 -- You can create intermediate views (as needed). Remember to drop these views after you have populated the result tables query1, query2, ...
 -- You can use the "\i a2.sql" command in psql to execute the SQL commands in this file.
 -- Good Luck!
- 
+
+CREATE VIEW sum_capacity(tid, tname, sum) AS
+	SELECT tournament.tid, tournament.tname, SUM(court.capacity)
+	FROM tournament JOIN court ON tournament.tid = court.tid
+	GROUP BY tournament.tid, tournament.tname;
  
 --Query 1 statements
 INSERT INTO query1
@@ -20,22 +24,15 @@ INSERT INTO query1
 	);
 
 --Query 2 statements
---INSERT INTO query2
-	/*(SELECT tournament.tname, SUM(court.capacity) AS "totalCapacity"
-	FROM tournament, court
-	WHERE court.tid = tournament.tid
-	GROUP BY tournament.tname
-	);*/
-	
-	-- (SELECT tournament.tname, court.capacity AS "totalCapacity"
-	-- FROM tournament, court 	
-	-- WHERE court.capacity >= ALL (SELECT SUM(court.capacity) AS "totalCapacity"
-									-- FROM tournament, court
-									-- WHERE court.tid = tournament.tid
-									-- GROUP BY tournament.tid)
-	-- AND court.tid = tournament.tid
-	-- );
-	
+INSERT INTO query2
+	(SELECT tname, sum AS "totalCapacity"
+		FROM sum_capacity
+		WHERE sum = (SELECT max(sum) FROM sum_capacity)
+		ORDER BY tname ASC
+	);	
+DROP VIEW sum_capacity;
+
+
 --Query 3 statements
 --INSERT INTO query3
 	-- (SELECT event.winid AS "p1id", player.pname AS "p1name", event.lossid AS "p2id", player.pname AS "p2name" 
