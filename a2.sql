@@ -7,11 +7,11 @@ SET search_path TO A2;
 -- You can use the "\i a2.sql" command in psql to execute the SQL commands in this file.
 -- Good Luck!
 
-CREATE VIEW player_champion AS
-	SELECT player.pid, player.pname, champion.tid 
-	FROM player, champion
-	WHERE player.pid = champion.pid; 
-
+CREATE VIEW sum_capacity(tid, tname, sum) AS
+	SELECT tournament.tid, tournament.tname, SUM(court.capacity)
+	FROM tournament JOIN court ON tournament.tid = court.tid
+	GROUP BY tournament.tid, tournament.tname;
+ 
 --Query 1 statements
 INSERT INTO query1
 	(SELECT player.pname, country.cname, tournament.tname
@@ -22,25 +22,17 @@ INSERT INTO query1
 		WHERE player.cid = country.cid
 		ORDER BY player.pname ASC
 	);
-DROP VIEW player_champion;
 
 --Query 2 statements
---INSERT INTO query2
-	/*(SELECT tournament.tname, SUM(court.capacity) AS "totalCapacity"
-	FROM tournament, court
-	WHERE court.tid = tournament.tid
-	GROUP BY tournament.tname
-	);*/
-	
-	-- (SELECT tournament.tname, court.capacity AS "0totalCapacity"
-	-- FROM tournament, court 	
-	-- WHERE court.capacity >= ALL (SELECT SUM(court.capacity) AS "totalCapacity"
-									-- FROM tournament, court
-									-- WHERE court.tid = tournament.tid
-									-- GROUP BY tournament.tid)
-	-- AND court.tid = tournament.tid
-	-- );
-	
+INSERT INTO query2
+	(SELECT tname, sum AS "totalCapacity"
+		FROM sum_capacity
+		WHERE sum = (SELECT max(sum) FROM sum_capacity)
+		ORDER BY tname ASC
+	);	
+DROP VIEW sum_capacity;
+
+
 --Query 3 statements
 --INSERT INTO query3
 	-- (SELECT event.winid AS "p1id", player.pname AS "p1name", event.lossid AS "p2id", player.pname AS "p2name" 
@@ -70,8 +62,22 @@ DROP VIEW player_champion;
 		-- ORDER BY player.pname ASC
 	-- );
 
+=======
+	 -- FROM champion JOIN player ON champion.pid = player.pid
+	 -- JOIN tournament ON tournament.tid = champion.tid
+	 -- WHERE tournament.tid = ALL (SELECT champion.tid FROM champion)
+	 -- ORDER BY player.pname ASC
+	-- );
+	
 --Query 5 statements
---INSERT INTO query5
+INSERT INTO query5
+	(SELECT player.pid, player.pname, AVG(record.wins)/4 AS "avgwins"
+		FROM record JOIN player ON record.pid = player.pid
+		WHERE record.year >= 2011 AND record.year <= 2014
+		GROUP BY player.pid, player.pname
+		ORDER BY AVG(record.wins) DESC
+		LIMIT 10
+	);
 
 --Query 6 statements
 --INSERT INTO query6
