@@ -18,31 +18,31 @@ INSERT INTO query1
 
 --Query 2 statements
 INSERT INTO query2
-	(SELECT tournament.tname, MAX(SUM(court.capacity)) AS "totalCapacity"
+	(SELECT tournament.tname, SUM(court.capacity) AS "totalCapacity"
 	FROM tournament, court
 	WHERE court.tid = tournament.tid
 	GROUP BY tournament.tname
 	);
 --Query 3 statements
-INSERT INTO query3
+--INSERT INTO query3
 
 --Query 4 statements
-INSERT INTO query4
+--INSERT INTO query4
 
 --Query 5 statements
-INSERT INTO query5
+--INSERT INTO query5
 
 --Query 6 statements
-INSERT INTO query6
+--INSERT INTO query6
 
 --Query 7 statements
-INSERT INTO query7
+--INSERT INTO query7
 
 --Query 8 statements
-INSERT INTO query8
+--INSERT INTO query8
 
 --Query 9 statements
-INSERT INTO query9
+--INSERT INTO query9
 
 --Query 10 statements
-INSERT INTO query10
+--INSERT INTO query10
