@@ -6,13 +6,8 @@ SET search_path TO A2;
 -- You can create intermediate views (as needed). Remember to drop these views after you have populated the result tables query1, query2, ...
 -- You can use the "\i a2.sql" command in psql to execute the SQL commands in this file.
 -- Good Luck!
-
-CREATE VIEW player_champion AS
-	SELECT player.pid, player.pname, champion.tid 
-	FROM player, champion
-	WHERE player.pid = champion.pid; 
-
-
+ 
+ 
 --Query 1 statements
 INSERT INTO query1
 	(SELECT player.pname, country.cname, tournament.tname
@@ -23,7 +18,6 @@ INSERT INTO query1
 		WHERE player.cid = country.cid
 		ORDER BY player.pname ASC
 	);
-DROP VIEW player_champion;
 
 --Query 2 statements
 --INSERT INTO query2
@@ -58,16 +52,22 @@ DROP VIEW player_champion;
   
 -- --Query 4 statements
 -- --INSERT INTO query4
-	(SELECT champion.pid, player.pname
-	 FROM champion, player
-	 WHERE player.pid = champion.pid
-	 AND champion.tid = ALL (SELECT tournament.tid FROM tournament)
-	 ORDER BY player.pname ASC
-	);
+	-- (SELECT champion.pid, player.pname
+	 -- FROM champion JOIN player ON champion.pid = player.pid
+	 -- JOIN tournament ON tournament.tid = champion.tid
+	 -- WHERE tournament.tid = ALL (SELECT champion.tid FROM champion)
+	 -- ORDER BY player.pname ASC
+	-- );
 	
-
 --Query 5 statements
---INSERT INTO query5
+INSERT INTO query5
+	(SELECT player.pid, player.pname, AVG(record.wins)/4 AS "avgwins"
+		FROM record JOIN player ON record.pid = player.pid
+		WHERE record.year >= 2011 AND record.year <= 2014
+		GROUP BY player.pid, player.pname
+		ORDER BY AVG(record.wins) DESC
+		LIMIT 10
+	);
 
 --Query 6 statements
 --INSERT INTO query6
