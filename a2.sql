@@ -81,12 +81,8 @@ INSERT INTO query5
 
 --Query 6 statements
 --INSERT INTO query6
-	(SELECT record.year, record.wins, player.pname
-		FROM record, player
-		WHERE 
-		AND record.pid = player.pid
 	
-	);
+	
 --Query 7 statements
 --INSERT INTO query7
 
